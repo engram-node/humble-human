@@ -1,0 +1,5 @@
+# Humble Human — backend (CLI + proxy server)
+openai>=1.0      # LLM client (main.py, proxy_server.py upstream)
+fastapi>=0.115   # proxy_server.py HTTP layer
+uvicorn>=0.30    # proxy_server.py ASGI server
+streamlit>=1.30  # inspector.py memory diagnostics UI

@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+/*
+ * Humble Human — monochrome + one accent.
+ * The entire UI is zinc grayscale; the single accent colour is a CSS
+ * variable (--accent) that Tailwind v4 exposes as the `accent` palette via
+ * the @theme inline token below (so bg-accent, text-accent, border-accent,
+ * and opacity modifiers like bg-accent/15 all work via color-mix).
+ */
+:root {
+  --accent: #34d399;
+}
+
+@theme inline {
+  --color-accent: var(--accent);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #09090b; /* zinc-950 */
+  color: #f4f4f5; /* zinc-100 */
+  font-family:
+    Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+/* Slim, unobtrusive scrollbars (WebKit + Firefox) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3f3f46 transparent;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46; /* zinc-700 */
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------- Reusable component classes ---------- */
+
+.btn-primary {
+  @apply flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
+    transition-colors disabled:cursor-not-allowed;
+  background: var(--accent);
+  color: #09090b;
+}
+.btn-primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--accent) 85%, white);
+}
+.btn-primary:disabled {
+  opacity: 0.4;
+}
+.btn-primary:disabled:hover {
+  background: var(--accent);
+}
+
+.btn-ghost {
+  @apply rounded-md p-2 text-zinc-400 transition-colors hover:bg-zinc-800
+    hover:text-zinc-100;
+}
+
+.nav-tab {
+  @apply flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-sm
+    transition-colors hover:bg-zinc-800 hover:text-zinc-200;
+}
+.nav-tab.active {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+.tool-card {
+  @apply rounded-lg border font-mono text-xs overflow-hidden;
+}
+
+/* Memory tool cards: neutral chrome; state shown by a single accent dot. */
+.tool-card-done {
+  border-color: #3f3f46; /* zinc-700 */
+  background: #18181b; /* zinc-900 */
+}
+.tool-card-error {
+  border-color: #fafafa;
+  background: #18181b;
+}
+
+.tool-card-header {
+  @apply flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-left
+    transition-colors hover:bg-zinc-800/50;
+}
+
+.status-badge {
+  @apply rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide;
+}
+
+/* Diff line styles (accent = added, grayscale strike = removed) — kept as
+   plain CSS since Tailwind classes live in the JSX. */
+
+/* Blinking block cursor for streaming text */
+.codex-cursor {
+  @apply ml-0.5 inline-block h-4 w-2 animate-pulse align-text-bottom;
+  background: var(--accent);
+}
+
+/* ---------- Monaco ---------- */
+.monaco-editor,
+.monaco-editor-background,
+.monaco-editor .margin,
+.monaco-editor .inputarea.ime-input {
+  background-color: #09090b !important;
+}
